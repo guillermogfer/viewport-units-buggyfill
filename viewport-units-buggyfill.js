@@ -395,12 +395,15 @@
 
   function convertLinkToStyle(link, next) {
     getCors(link.href, function() {
-      var style = document.createElement('style');
-      style.media = link.media;
-      style.setAttribute('data-href', link.href);
-      style.textContent = this.responseText;
-      link.parentNode.replaceChild(style, link);
-      next();
+      // Skip font-awesome from conversion
+      if (link.href.indexOf('font-awesome') < 0) {
+        var style = document.createElement('style');
+        style.media = link.media;
+        style.setAttribute('data-href', link.href);
+        style.textContent = this.responseText;
+        link.parentNode.replaceChild(style, link);
+        next();
+      }
     }, next);
   }
 
